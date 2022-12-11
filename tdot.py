@@ -2,82 +2,75 @@ import pygame
 from pygame.locals import *
 
 from board import Board
-from constants import SIZE
-FPS = 30
+from constants import SIZE, THE_MOVES
+FPS = 2
 
-def three_dots(game_map):
-    the_moves = {"U": "↑", "D": "↓", "L": "←", "R": "→"}
-    board = Board(game_map)
+def three_dots(game_map):    
+    board = Board()
+    pygame.init()
+    time1 = pygame.time.get_ticks()
+    board.read_in_board_string(game_map)
+    time1 = pygame.time.get_ticks() - time1
     WIN = pygame.display.set_mode((board.cols * SIZE, board.rows * SIZE))
     pygame.display.set_caption("Three Dots")
     run = True
     clock = pygame.time.Clock()
     board.draw(WIN)
-    
-    while run:    
+    pygame.display.update()
+    time2 = pygame.time.get_ticks()
+    solution = board.find_path()
+    time2 = pygame.time.get_ticks() - time2
+    print(solution)
+    for m in solution:
         clock.tick(FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    print("got up")
-                    board.move(the_moves["U"])
-                elif event.key == pygame.K_DOWN:
-                    print("got down")
-                    board.move(the_moves["D"])
-                elif event.key == pygame.K_RIGHT:
-                    print("got right")
-                    board.move(the_moves["R"])
-                elif event.key == pygame.K_LEFT:
-                    print("got left")
-                    board.move(the_moves["L"])
-                else:
-                    pass
+        board.move(m)
         board.draw(WIN)
-        pygame.display.update()
+        pygame.display.update()        
+    print (time1, "ms to read in ", time2, "ms to solve")
+    input("press return")
     pygame.quit()
 
 
-game_maps = ( "+------------+\n"
-            + "|RGY         |\n"
-            + "|            |\n"
-            + "|     **     |\n"
-            + "|     **     |\n"
-            + "|            |\n"
-            + "|         rgy|\n"
-            + "+------------+",
+game_maps = ( 
+            #   "+------------+\n"
+            # + "|RGY         |\n"
+            # + "|            |\n"
+            # + "|     **     |\n"
+            # + "|     **     |\n"
+            # + "|            |\n"
+            # + "|         rgy|\n"
+            # + "+------------+",
 
-                "+------------+\n"
-            + "|R           |\n"
-            + "|G           |\n"
-            + "|Y    **     |\n"
-            + "|     **    r|\n"
-            + "|           g|\n"
-            + "|           y|\n"
-            + "+------------+",
+            #   "+------------+\n"
+            # + "|R           |\n"
+            # + "|G           |\n"
+            # + "|Y    **     |\n"
+            # + "|     **    r|\n"
+            # + "|           g|\n"
+            # + "|           y|\n"
+            # + "+------------+",
 
-                "+------------+\n"
-            + "|R           |\n"
-            + "|G    **     |\n"
-            + "|Y    **     |\n"
-            + "|            |\n"
-            + "|     **    r|\n"
-            + "|     **    g|\n"
-            + "|           y|\n"
-            + "+------------+",
+            #   "+------------+\n"
+            # + "|R           |\n"
+            # + "|G    **     |\n"
+            # + "|Y    **     |\n"
+            # + "|            |\n"
+            # + "|     **    r|\n"
+            # + "|     **    g|\n"
+            # + "|           y|\n"
+            # + "+------------+",
 
-                "+------------+\n"
-            + "|R    *******|\n"
-            + "|G    *******|\n"
-            + "|Y    *******|\n"
-            + "|            |\n"
-            + "|           r|\n"
-            + "|******     g|\n"
-            + "|******     y|\n"
-            + "+------------+",
+            #   "+------------+\n"
+            # + "|R    *******|\n"
+            # + "|G    *******|\n"
+            # + "|Y    *******|\n"
+            # + "|            |\n"
+            # + "|           r|\n"
+            # + "|******     g|\n"
+            # + "|******     y|\n"
+            # + "+------------+",
 
-                "+------------+\n"
+              "+------------+\n"
             + "|R     ** ***|\n"
             + "|G     ** ***|\n"
             + "|Y           |\n"
@@ -87,7 +80,27 @@ game_maps = ( "+------------+\n"
             + "|           g|\n"
             + "|** ***     r|\n"
             + "|** ***     y|\n"
-            + "+------------+" )
+            + "+------------+" ,
+            
+              "+---------------+\n"
+            + "|           * * |\n"
+            + "| **  **    * * |\n"
+            + "| **    * *    g|\n"
+            + "|     *** *   r |\n"
+            + "| Y     * *    y|\n"
+            + "| RG            |\n"
+            + "|               |\n"
+            + "+---------------+" ,
+            
+              "+---------------+\n"
+            + "|      g **     |\n"
+            + "|   **   **     |\n"
+            + "|   **yr **     |\n"
+            + "| R      ** * * |\n"
+            + "|  Y     ** * * |\n"
+            + "| G             |\n"
+            + "|               |\n"
+            + "+---------------+\n"
+            )
 
-for game_map in game_maps:
-    print(three_dots(game_map))
+three_dots(game_maps[2])
