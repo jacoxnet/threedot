@@ -2,7 +2,7 @@ from board import Board
 
 def solve(game_map):
     board = Board(game_map)
-    
+    print (board.find_path())
 
 
 game_maps = ( "+------------+\n"
@@ -55,3 +55,5 @@ game_maps = ( "+------------+\n"
             + "|** ***     y|\n"
             + "+------------+" )
 
+    
+solve(game_maps[0])
