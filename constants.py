@@ -1,9 +1,15 @@
 import pygame
 
-# pixels per row/col
-SIZE = 30
-PADDING = 4
+# Board size
+BWIDTH = 12
+BHEIGHT = 6
 
+# Square size
+# pixels per row/col
+SQSIZE = 30
+SQPADDING = 4
+
+# Colors
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
