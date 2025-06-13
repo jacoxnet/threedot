@@ -2,7 +2,7 @@ import pygame
 
 # Square size
 # pixels per row/col
-SQSIZE = 30
+SQSIZE = 60
 SQPADDING = 4
 
 # Colors

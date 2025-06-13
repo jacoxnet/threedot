@@ -13,6 +13,7 @@ class DisplayBoard:
         pygame.display.set_caption("Three Dot")
         self.win.fill(GRAY)
         self.draw_board()
+        pygame.display.update()
         
     def draw_board(self):
         for row in range(self.board.rows):
@@ -22,20 +23,19 @@ class DisplayBoard:
                 pygame.draw.rect(self.win, WHITE, (x, y, SQSIZE - SQPADDING, SQSIZE - SQPADDING))
                 pygame.draw.rect(self.win, BLACK, (x, y, SQSIZE - SQPADDING, SQSIZE - SQPADDING), 1)    
         for piece in self.board.map.keys():
-            if piece in "RGYrgy":
-                self.draw_piece(self, piece)
+            self.draw_piece(piece)
         
     def draw_piece(self, piece):
-        radius = SQSIZE // 2 - self.PADDING 
+        radius = SQSIZE // 2 - SQPADDING 
         if piece in "RGY":
-            pygame.draw.circle(self.win, self.color[piece], (self.x, self.y), radius)
+            pygame.draw.circle(self.win, self.board.get_color(piece), self.board.get_piece(piece), radius)
         elif piece in "rgy":
-            pygame.draw.circle(self.win, self.color[piece], (self.x, self.y), radius)
-            pygame.draw.circle(self.win, GRAY, (self.x, self.y), radius // 2)
+            pygame.draw.circle(self.win, self.board.get_color(piece), self.board.get_piece(piece), radius)
+            pygame.draw.circle(self.win, GRAY, self.board.get_piece(piece), radius // 2)
         elif piece == "*":
             # cycle through tuples in map for obstacles
             for item in self.board.map[piece]:
                 pygame.draw.rect(self.win, GRAY, (item[0] - SQSIZE // 2, item[1] - SQSIZE // 2, SQSIZE, SQSIZE))
         
     def __repr__(self):
-        return str(self.color)
+        return str(self.board.map)
