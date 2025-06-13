@@ -1,9 +1,5 @@
 import pygame
 
-# Board size
-BWIDTH = 12
-BHEIGHT = 6
-
 # Square size
 # pixels per row/col
 SQSIZE = 30

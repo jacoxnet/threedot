@@ -1,4 +1,21 @@
+from constants import RED, GREEN, YELLOW, GRAY
+
 class Board:
+
+    pcolor = {
+        "R": RED,
+        "G": GREEN,
+        "Y": YELLOW,
+        "r": RED,
+        "g": GREEN,
+        "y": YELLOW,
+        "*": GRAY
+    }
+    
+    # Initialize the board with a string representation
+    #   board_string contains the original board string
+    #   map is a dictionary mapping pieces to their positions
+    #      with RGY, rgy, and * as keys indexing row,col tuples   
     def __init__(self, board_string):
         self.board_string = board_string
         self.map = {}
@@ -35,6 +52,15 @@ class Board:
                 else:
                     pass
                 bcounter += 1
+
+    def get_color(self, piece):
+        """Return the color associated with a piece."""
+        return self.pcolor.get(piece, None)
+    
+    def get_piece(self, piece):
+        """Return the location of the given piece."""
+        """For RGYrgy a tuple; for * a list of tuples."""
+        return self.map[piece]
 
     # calclated new location after proposed move (UDLR)
     # for a single piece (RG or Y)
@@ -173,61 +199,3 @@ class Board:
                         open_set.sort(key=lambda x:self.get_f(x))
         return False
 
-def three_dots(game_map):
-    board = Board(game_map)
-    solution = board.find_path()
-    return solution
-
-game_maps = ( "+------------+\n"
-            + "|RGY         |\n"
-            + "|            |\n"
-            + "|     **     |\n"
-            + "|     **     |\n"
-            + "|            |\n"
-            + "|         rgy|\n"
-            + "+------------+",
-
-                "+------------+\n"
-            + "|R           |\n"
-            + "|G           |\n"
-            + "|Y    **     |\n"
-            + "|     **    r|\n"
-            + "|           g|\n"
-            + "|           y|\n"
-            + "+------------+",
-
-                "+------------+\n"
-            + "|R           |\n"
-            + "|G    **     |\n"
-            + "|Y    **     |\n"
-            + "|            |\n"
-            + "|     **    r|\n"
-            + "|     **    g|\n"
-            + "|           y|\n"
-            + "+------------+",
-
-                "+------------+\n"
-            + "|R    *******|\n"
-            + "|G    *******|\n"
-            + "|Y    *******|\n"
-            + "|            |\n"
-            + "|           r|\n"
-            + "|******     g|\n"
-            + "|******     y|\n"
-            + "+------------+",
-
-                "+------------+\n"
-            + "|R     ** ***|\n"
-            + "|G     ** ***|\n"
-            + "|Y           |\n"
-            + "|            |\n"
-            + "|            |\n"
-            + "|            |\n"
-            + "|           g|\n"
-            + "|** ***     r|\n"
-            + "|** ***     y|\n"
-            + "+------------+" )
-
-for amap in game_maps:
-    print(three_dots(amap))
-    print("----------")
